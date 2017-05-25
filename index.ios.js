@@ -3,4 +3,17 @@
  * https://github.com/facebook/react-native
  * @flow
  */
-import './app_modules/Home/Screen/HomeScreen';
+
+import  React from  'react'
+
+import  {AppRegistry}from  'react-native';
+
+import  MainScreen from './MainScreen';
+
+export  default  class  meituandemo extends  React.Component {
+    render(){
+        return (<MainScreen/>);
+    }
+}
+
+AppRegistry.registerComponent('meituandemo', () => meituandemo);

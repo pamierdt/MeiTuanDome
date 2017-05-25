@@ -1,13 +1,22 @@
+
+/**
+ * MineScreen
+ * meituandemo
+ * Created by peng on 2017/5/23 13:30.
+ * @WebStorm
+ */
+
+import React from  'react'
 import {
     View,
     Text,
     Button,
 } from 'react-native'
-class MineScreen extends React.Component {
+export default class MineScreen extends React.Component {
     render() {
         return (
             <View>
-                <Text>MineScreen</Text>
+                <Text>MineScreenMineScreen</Text>
             </View>
 
         )

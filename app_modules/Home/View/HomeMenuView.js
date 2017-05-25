@@ -13,16 +13,24 @@ import HomeMenuItem from './HomeMenuItem'
 import PageControl from './PageControl'
 
 import Screen from '../../Tools/Screen'
-class HomeMenuView extends React.Component {
 
-    //noinspection JSAnnotator
-    state = {
+export default class HomeMenuView extends React.Component {
+
+    state: {
         currentPage: number,
     }
 
-    onScroll (e) {
-
+    onScroll(e: any) {
+        console.log(e);
+        let x = e.nativeEvent.contentOffset.x;
+        let currentPage = x/Screen.screenWidth;
+        if (this.state.currentPage != currentPage) {
+            this.setState({
+                currentPage: currentPage,
+            })
+        }
     }
+
     constructor() {
         super();
         this.state = {
@@ -32,8 +40,9 @@ class HomeMenuView extends React.Component {
 
     render() {
         let {menuInfos, onMenuSelected} = this.props
+
         let menuItems = menuInfos.map(
-            (info, i) => {
+            (info, i) => (
                 <HomeMenuItem
                     key={info.title}
                     title={info.title}
@@ -42,39 +51,46 @@ class HomeMenuView extends React.Component {
                         onMenuSelected && onMenuSelected(i)
                     }}
                 />
-            }
+            )
         )
         let menuViews = []
-        let pageCount = Math.ceil(menuItems.length() / 10)
+        let pageCount = Math.ceil(menuItems.length / 10)
 
         for (let i = 0; i < pageCount; i++) {
-            let length = menuItems.length() < (i * 10) ? menuItems.length() - (i * 10) : 10
+            let length = menuItems.length < (i * 10) ? menuItems.length - (i * 10) : 10
             let items = menuItems.slice(i * 10, i * 10 + length)
 
             let menuView = (
-                <View style={styles.itemView} key={i}>
+                <View style={styles.itemsView} key={i}>
                     {items}
                 </View>
             )
-            menuView.push(menuView)
+            menuViews.push(menuView)
         }
         return (
             <View style={styles.container}>
                 <ScrollView
                     contentContainerStyle={styles.contentContainer}
-                    horizontal= {true}
-                    showsHorizontalScrollIndicator = {false}
-                    pagingEnabled={true}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    pagingEnabled
                     onScroll={(e) => this.onScroll(e)}
                 >
-                    <View style = {styles.menuContainer}>
+                    <View style={styles.menuContainer}>
                         {menuViews}
                     </View>
                 </ScrollView>
 
                 <PageControl
-                    style:{styles.pageControl}
-                    numberOfPages={pageCount}/>
+                    style={styles.pageControl}
+                    numberOfPages={pageCount}
+                    currentPage={this.state.currentPage}
+                    hidesForSinglePage
+                    pageIndicatorTintColor='gray'
+                    currentPageIndicatorTintColor='#06C1AE'
+                    indicatorSize={{width: 8, height: 8}}
+                >
+                </PageControl>
             </View>
         )
     }

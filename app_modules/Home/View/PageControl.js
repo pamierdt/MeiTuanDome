@@ -8,11 +8,11 @@
 
 import React from 'react';
 
-import { View, StyleSheet, TouchableHighlight } from 'react-native';
+import { View, StyleSheet, TouchableHighlight, } from 'react-native';
 
 import assign from 'object-assign';
 
-class  PageControl extends React.Component {
+export default class  PageControl extends React.Component {
     static propTypes = {
         numberOfPages: React.PropTypes.number.isRequired,
         currentPage: React.PropTypes.number,
@@ -24,17 +24,19 @@ class  PageControl extends React.Component {
         currentPageIndicatorStyle: React.PropTypes.style,
         onPageIndicatorPress: React.PropTypes.func
     }
+
     static defaultProps = {
-        numberOfPages:0,
-        currentPage:0,
-        hidesForSinglePage:false,
-        pageIndicatorTintColor:'gray',
+        numberOfPages: 0,
+        currentPage: 0,
+        hidesForSinglePage: false,
+        pageIndicatorTintColor: 'gray',
         currentPageIndicatorTintColor: "#ffffff",
-        indicatorSize:{width:8,height:8},
-        indicatorStyle:{},
+        indicatorSize: {width:8,height:8},
+        indicatorStyle: {},
+        currentPageIndicatorStyle: {},
         onPageIndicatorPress: function () {}
     }
-    onPageIndicatorPress(index){
+    onPageIndicatorPress(index: number){
         this.props.onPageIndicatorPress(index);
     }
     render (){
@@ -60,7 +62,7 @@ class  PageControl extends React.Component {
             pages.push(i);
         }
         return (
-            this.prototype.hidesForSinglePage && pages.length <= 1 ?null:
+            this.props.hidesForSinglePage && pages.length <= 1 ?null:
                 <View style={[styles.container, defaultStyle,style]}>
                     {
                      pages.map((el,i) => <TouchableHighlight key = {i} onPress={this.onPageIndicatorPress.bind(this,i)}>
@@ -71,13 +73,11 @@ class  PageControl extends React.Component {
 
 }
 
-const styles = Stylesheet.create({
+const styles = StyleSheet.create({
     container:{
-        backgroundColor:'transparent',
-        alignment : 'center',
+        backgroundColor:'#ffffff',
+        alignItems : 'center',
         justifyContent : 'center',
         flexDirection: 'row'
     }
-});
-
-export default  PageControl;
+})

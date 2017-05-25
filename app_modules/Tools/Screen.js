@@ -9,8 +9,8 @@ import React from 'react'
 import { Dimensions, Platform, PixelRatio } from 'react-native'
 
 export default {
-    screenWidth : Dimensions.get('screen').width,
-    screenHeght: Dimensions.get('screen').height,
+    screenWidth : Dimensions.get('window').width,
+    screenHeght: Dimensions.get('window').height,
     scale:PixelRatio.getPixelSizeForLayoutSize(),
-    statusBarHeight:(platform.OS ==='ios'? 20: 0)
+    statusBarHeight:(Platform.OS ==='ios'? 20: 0)
 }

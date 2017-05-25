@@ -8,17 +8,16 @@ import  React from 'react'
 
 import {View,TouchableOpacity,Text,Image,StyleSheet} from  'react-native'
 import Screen from '../../Tools/Screen'
-class HomeMenuItem extends React.Component {
+export default class HomeMenuItem extends React.Component {
     constructor () {
         super();
     }
     render() {
        return (
           <TouchableOpacity style={styles.container}
-              onPress={this.props.onPress}
-          >
-              <Image source={this.props.icon} resizeMethod='contain' style={styles.icon}/>
-              <text>{this.props.title}</text>
+              onPress={this.props.onPress}>
+              <Image source={this.props.icon} resizeMode='contain' style={styles.icon}/>
+              <Text>{this.props.title}</Text>
           </TouchableOpacity>
        )
     }
@@ -26,7 +25,7 @@ class HomeMenuItem extends React.Component {
 const  styles = StyleSheet.create({
     container:{
         justifyContent : 'center',
-        alignment : 'center',
+        alignItems : 'center',
         width : Screen.screenWidth/5,
         height : Screen.screenWidth/5,
     },
