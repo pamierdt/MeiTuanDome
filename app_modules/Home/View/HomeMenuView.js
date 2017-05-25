@@ -21,7 +21,6 @@ export default class HomeMenuView extends React.Component {
     }
 
     onScroll(e: any) {
-        console.log(e);
         let x = e.nativeEvent.contentOffset.x;
         let currentPage = x/Screen.screenWidth;
         if (this.state.currentPage != currentPage) {
