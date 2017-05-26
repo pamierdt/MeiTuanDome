@@ -26,6 +26,7 @@ import {
 import Screen from '../../Tools/Screen';
 import SpaceView from '../../Tools/SpaceView'
 import APIManager from '../../Tools/APIManager'
+import RefreshListView from '../View/RefreshListView'
 import HomeMenuView from  '../View/HomeMenuView'
 import HomeGuideView from '../View/HomeGuideView'
 
@@ -90,26 +91,37 @@ export default class HomeScreen extends React.Component {
     }
 
     loadListData() {
-
+        fetch(APIManager.recommend)
+            .then((response) => response.json())
+            .then((json) => {
+                console.log(JSON.stringify(json.data));
+            })
+            .catch((error) => {
+                alert(error);
+            })
     }
 
     onMenuSelected(index: number) {
         alert(index);
     }
 
-    onGuideSelected(index: number){
+    onGuideSelected(index: number) {
         let guideInfo = this.state.discounts[index]
         if (guideInfo.type == 1) {
             let location = guideInfo.tplurl.indexOf('http')
             let url = guideInfo.tplurl.slice(location)
-            this.props.navigation.navigate('Web',{url: url})
+            this.props.navigation.navigate('Web', {url: url})
         }
     }
 
+    componentWillMount() {
+        this.loadData();
+    }
 
     componentDidMount() {
-        this.loadHeaderData();
+        // this.loadHeaderData();
     }
+
     render() {
         return (
             <ScrollView>
