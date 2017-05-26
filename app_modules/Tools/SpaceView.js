@@ -23,6 +23,6 @@ export default class SpaceView extends React.Component {
 const styles = StyleSheet.create({
     lineStyle: {
         height: 14,
-        backgroundColor: '#e8e8e8'
+        backgroundColor: 'blue'
     },
 })

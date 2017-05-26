@@ -11,6 +11,6 @@ import { Dimensions, Platform, PixelRatio } from 'react-native'
 export default {
     screenWidth : Dimensions.get('window').width,
     screenHeght: Dimensions.get('window').height,
-    scale:PixelRatio.getPixelSizeForLayoutSize(),
+    scale:PixelRatio.get(),
     statusBarHeight:(Platform.OS ==='ios'? 20: 0)
 }

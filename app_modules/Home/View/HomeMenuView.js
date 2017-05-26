@@ -19,14 +19,23 @@ export default class HomeMenuView extends React.Component {
     state: {
         currentPage: number,
     }
-
+    onPageControlIndicatorPress(index: number) {
+        if (this.state.currentPage != index) {
+            //TODO: scrollView 自动翻页
+            // this.refs.menu.scrollView.scrollToOffset({animated: true, offset: index*Screen.screenWidth});
+            this.setState({
+                currentPage: index,
+            })
+        }
+    }
     onScroll(e: any) {
         let x = e.nativeEvent.contentOffset.x;
         let currentPage = x/Screen.screenWidth;
         if (this.state.currentPage != currentPage) {
-            this.setState({
+           this.setState({
                 currentPage: currentPage,
             })
+
         }
     }
 
@@ -67,8 +76,9 @@ export default class HomeMenuView extends React.Component {
             menuViews.push(menuView)
         }
         return (
-            <View style={styles.container}>
+            <View ref = 'menu' style={styles.container}>
                 <ScrollView
+                    ref = 'scrollView'
                     contentContainerStyle={styles.contentContainer}
                     horizontal
                     showsHorizontalScrollIndicator={false}
@@ -88,6 +98,7 @@ export default class HomeMenuView extends React.Component {
                     pageIndicatorTintColor='gray'
                     currentPageIndicatorTintColor='#06C1AE'
                     indicatorSize={{width: 8, height: 8}}
+                    onPageIndicatorPress={(index) => this.onPageControlIndicatorPress(index)}
                 >
                 </PageControl>
             </View>

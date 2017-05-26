@@ -17,6 +17,7 @@ import {
     TextInput,
     RefreshControl,
     TouchableOpacity,
+    ScrollView
 } from 'react-native';
 import {
     StackNavigator,
@@ -26,12 +27,14 @@ import Screen from '../../Tools/Screen';
 import SpaceView from '../../Tools/SpaceView'
 import APIManager from '../../Tools/APIManager'
 import HomeMenuView from  '../View/HomeMenuView'
+import HomeGuideView from '../View/HomeGuideView'
+
 // homeScreen
 export default class HomeScreen extends React.Component {
 
-    state:{
-        // discounts: Array<Object>,
-        // dataSource: ListView.DataSource
+    state: {
+        discounts: Array<Object>,
+        dataSource: ListView.DataSource
     }
 
     static navigationOptions = ({navigation}) => ({
@@ -56,41 +59,64 @@ export default class HomeScreen extends React.Component {
                 </Text>
             </TouchableOpacity>
         ),
-        headerStyle: {backgroundColor: '#16cc17'},
+        headerStyle: {backgroundColor: '#2cc0ae'},
     })
 
 
     constructor() {
         super();
-        // let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
-        // this.state ={
-        //     discounts:[],
-        //     dataSource: ds.cloneWithRows([]),
-        // }
+        let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
+        this.state = {
+            discounts: [],
+            dataSource: ds.cloneWithRows([]),
+        }
     }
-    loadData(){
+
+    loadData() {
         this.loadHeaderData();
         this.loadListData();
     }
-    loadHeaderData(){
+
+    loadHeaderData() {
+        fetch(APIManager.discount)
+            .then((response) => response.json())
+            .then((json) => {
+                console.log(JSON.stringify(json));
+                this.setState({discounts: json.data})
+            })
+            .catch((error) => {
+                alert(error)
+            })
+    }
+
+    loadListData() {
 
     }
-    loadListData(){
 
-    }
     onMenuSelected(index: number) {
         alert(index);
     }
 
+    onGuideSelected(index: number) {
+
+    }
+
+    componentDidMount() {
+        this.loadHeaderData();
+    }
     render() {
         return (
-            <View>
+            <ScrollView>
                 <HomeMenuView
                     menuInfos={APIManager.menuInfos}
-                    onMenuSelected = {(index) => this.onMenuSelected(index)}
-                >
-                </HomeMenuView>
-            </View>
+                    onMenuSelected={(index) => this.onMenuSelected(index)}
+                />
+
+                <SpaceView/>
+                <HomeGuideView infos={this.state.discounts} onGuidSelected={(index) => this.onGuideSelected(index)}/>
+                <SpaceView/>
+
+            </ScrollView>
         )
     }
 
