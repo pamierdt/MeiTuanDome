@@ -26,7 +26,7 @@ export default class HomeGuideItem extends React.Component {
         let subTitle = guideInfo.deputytitle
         let imageUrl = guideInfo.imageurl.replace('w.h', '120.0')
         return (
-            <TouchableOpacity >
+            <TouchableOpacity onPress={()=> this.props.onPress()}>
                 <View style={styles.container}>
                     <View>
                         <Text style={{fontSize: 15, fontWeight: 'bold', color: color, marginBottom: 10,}}>

@@ -19,5 +19,4 @@ export default class RefreshListView extends React.Component {
 }
 
 const styles = StyleSheet.create({
-
 })

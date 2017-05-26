@@ -97,9 +97,15 @@ export default class HomeScreen extends React.Component {
         alert(index);
     }
 
-    onGuideSelected(index: number) {
-
+    onGuideSelected(index: number){
+        let guideInfo = this.state.discounts[index]
+        if (guideInfo.type == 1) {
+            let location = guideInfo.tplurl.indexOf('http')
+            let url = guideInfo.tplurl.slice(location)
+            this.props.navigation.navigate('Web',{url: url})
+        }
     }
+
 
     componentDidMount() {
         this.loadHeaderData();
