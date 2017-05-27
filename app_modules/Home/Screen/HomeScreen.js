@@ -29,6 +29,8 @@ import APIManager from '../../Tools/APIManager'
 import RefreshListView from '../View/RefreshListView'
 import HomeMenuView from  '../View/HomeMenuView'
 import HomeGuideView from '../View/HomeGuideView'
+import GroupInfoItem from '../View/GroupInfoItem'
+import RefreshState from '../View/RefreshState'
 
 // homeScreen
 export default class HomeScreen extends React.Component {
@@ -95,9 +97,25 @@ export default class HomeScreen extends React.Component {
             .then((response) => response.json())
             .then((json) => {
                 console.log(JSON.stringify(json.data));
+                let dataList = json.data.map((info) => {
+                    return {
+                        id: info.id,
+                        imageUrl: info.squareimgurl,
+                        title: info.mname,
+                        subtitle: `[${info.range}]${info.title}`,
+                        price: info.price
+                    }
+                })
+                this.setState({
+                    dataSource: this.state.dataSource.cloneWithRows(dataList)
+                });
+                setTimeout(() => {
+                    this.refs.listView.endRefresh(RefreshState.NoMoreData)
+                }, 600)
             })
             .catch((error) => {
                 alert(error);
+                this.refs.listView.endRefresh(RefreshState.Failure)
             })
     }
 
@@ -114,17 +132,22 @@ export default class HomeScreen extends React.Component {
         }
     }
 
+    onGroupSelected(index: number) {
+        alert(index)
+        console.log()
+    }
+
+
     componentWillMount() {
-        this.loadData();
     }
 
     componentDidMount() {
-        // this.loadHeaderData();
+        this.refs.listView.startHeaderRefresh()
     }
 
-    render() {
+    renderHeaderView() {
         return (
-            <ScrollView>
+            <View>
                 <HomeMenuView
                     menuInfos={APIManager.menuInfos}
                     onMenuSelected={(index) => this.onMenuSelected(index)}
@@ -133,8 +156,26 @@ export default class HomeScreen extends React.Component {
                 <SpaceView/>
                 <HomeGuideView infos={this.state.discounts} onGuidSelected={(index) => this.onGuideSelected(index)}/>
                 <SpaceView/>
+            </View>)
+    }
 
-            </ScrollView>
+    render() {
+        return (
+            // <RefreshListView/>
+            <View style={styles.container}>
+                <RefreshListView
+                    ref='listView'
+                    dataSource={this.state.dataSource}
+                    renderHeader={() => this.renderHeaderView()}
+                    renderRow={(rowData) =>
+                        <GroupInfoItem
+                            info={rowData}
+                            onPress={(index) => this.onGroupSelected(index)}
+                        />
+                    }
+                    onHeaderRefresh={() => this.loadData()}
+                />
+            </View>
         )
     }
 

@@ -14,7 +14,7 @@ import Screen from './Screen'
 
 export default class WebScreen extends React.Component {
     static navigationOptions = ({navigation}) => ({
-        headerStyle : {backgroundColor: '#ffffff'},
+        headerStyle : {backgroundColor: '#3dbfae'},
         title: navigation.state.params.title,
     })
     state :{
@@ -56,9 +56,7 @@ export default class WebScreen extends React.Component {
                 <WebView
                     automaticallyAdjustContentInsets={false}
                     source={this.state.source}
-                    onLoadStart={(e) => this.onWebViewLoadStart(e)}
                     onLoadEnd={(e) => this.onWebViewLoadEnd(e)}
-                    onError={(e) => this.onWebViewLoadError(e)}
                     style={styles.webView}
                     scalesPageToFit={true}
                 />

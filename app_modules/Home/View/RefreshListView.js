@@ -67,18 +67,23 @@ class RefreshListView extends React.Component {
         }
     }
 
-    endHeaderRefresh() {
-
-    }
-
     onFooterRefresh() {
         if (this.shouldStartFooterRefresh()) {
             this.startFooterRefresh()
         }
     }
-
-    endFooterRefresh() {
-
+    endRefresh(state: RefreshState) {
+        if (state == RefreshState.Refreshing){
+            return
+        }
+        let footerState = state
+        if (this.props.dataSource.getRowCount() == 0 ){
+            footerState = RefreshState.Idle
+        }
+        this.setState({
+            headerState: RefreshState.Idle,
+            footerState: footerState
+        })
     }
 
     headerState() {
@@ -94,16 +99,16 @@ class RefreshListView extends React.Component {
         return (
             <ListView
                 {...this.props}
-                enableEmptySection={true}
+                enableEmptySections
                 refreshControl={
                     <RefreshControl
                         refreshing={this.state.headerState == RefreshState.Refreshing}
-                        onRefresh={() => this.onHeaderRefresh().bind(this)}
+                        onRefresh={() => this.onHeaderRefresh()}
                         tintColor={'gray'}
                     />}
-                renderFooter={() => this.renderFooter().bind(this)}
+                renderFooter={() => this.renderFooter()}
                 onEndReachedThreshold={10}
-                onEndReached={() => this.onFooterRefresh().bind(this)}
+                onEndReached={() => this.onFooterRefresh()}
             />)
     }
 
