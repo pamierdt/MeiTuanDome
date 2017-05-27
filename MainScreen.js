@@ -18,6 +18,7 @@ import NearbyScreen from './app_modules/Nearby/Screen/NearbyScreen';
 import OrderScreen from './app_modules/Order/Screen/OrderScreen';
 import MineScreen from  './app_modules/Mine/Screen/MineScreen';
 import WebScreen from './app_modules/Tools/WebScreen'
+import GroupPurchaseScreen from './app_modules/Home/Screen/GroupPurchaseScreen'
 
 export default class MainScreen extends React.Component {
     constructor() {
@@ -84,17 +85,31 @@ const Tab = TabNavigator(
                 )
             })
         }
-    })
+    },
+    {
+        tabBarComponent: TabBarBottom,
+        tabBarPosition: 'bottom',
+        swipeEnabled: true,
+        lazy: true,
+        animationEnabled: true,
+        tabBarOptions: {
+            activeTintColor: '#06c1ae',
+            inactiveTintColor: '#979797',
+            style:{ backgroundColor: '#ffffff'}
+        }
+    }
+)
 
 const Navigator = StackNavigator(
     {
         Tab: {screen: Tab},
-        Web: {screen: WebScreen}
+        Web: {screen: WebScreen},
+        Group: {screen: GroupPurchaseScreen}
     },
     {
         navigationOptions: {
             headerBackTitle: null,
-            headerTintColor: '#ffffff',
+            headerTintColor: '#111111',
             showIcon: true,
         }
     }

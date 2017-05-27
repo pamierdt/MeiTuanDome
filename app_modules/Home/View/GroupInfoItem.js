@@ -27,12 +27,12 @@ export default class GroupInfoItem extends React.Component {
         let groupInfo = this.props.info
         let imageUrl = groupInfo.imageUrl.replace('w.h', '160.0')
         return (
-            <TouchableOpacity style={styles.container} onPress={() => this.props.onPress()}>
+            <TouchableOpacity style={styles.container} onPress={this.props.onPress}>
                 <Image style={styles.icon} source={{uri: imageUrl}}/>
                 <View style={{paddingRight:10,paddingLeft:20,flex:1} } >
                     <Text style={styles.title}>{groupInfo.title}</Text>
-                    <Text style={styles.subtitle} numberOfLines={0}>{groupInfo.subtitle} {groupInfo.subtitle} {groupInfo.subtitle}</Text>
-                    <View>
+                    <Text style={styles.subtitle} numberOfLines={0}>{groupInfo.subtitle}</Text>
+                    <View style={{marginTop: 10}}>
                         <PriceText price={groupInfo.price} isShowRMB={true} style={styles.price}/>
                     </View>
                 </View>
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     subtitle: {
         color: '#777777',
         fontSize: 13,
-        marginRight:-12,
+        marginTop: 10,
         justifyContent: 'space-between'
     },
     price: {

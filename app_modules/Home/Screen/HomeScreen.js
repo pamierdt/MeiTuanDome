@@ -50,14 +50,14 @@ export default class HomeScreen extends React.Component {
         ),
         headerRight: (
             <TouchableOpacity >
-                <Image source={require('../../Image/Home/icon_navigationItem_message_white@2x.png')}>
+                <Image source={require('../../Image/Home/icon_navigationItem_message_white@2x.png')} style={{justifyContent:'flex-start'}}>
                 </Image>
             </TouchableOpacity>
 
         ),
         headerLeft: (
             <TouchableOpacity >
-                <Text>
+                <Text style={{justifyContent: 'flex-end'}}>
                     深圳
                 </Text>
             </TouchableOpacity>
@@ -132,11 +132,10 @@ export default class HomeScreen extends React.Component {
         }
     }
 
-    onGroupSelected(index: number) {
-        alert(index)
-        console.log()
-    }
+    _onScroll(e: any) {
+        let x = e.nativeEvent.contentOffset.x;
 
+    }
 
     componentWillMount() {
     }
@@ -159,6 +158,14 @@ export default class HomeScreen extends React.Component {
             </View>)
     }
 
+    _renderRow(rowData, sectionId, rowId) {
+        return (
+            <GroupInfoItem onPress={() => {
+                this.props.navigation.navigate('Group', {groupInfo: rowData});
+            }} info={rowData}/>
+        )
+    }
+
     render() {
         return (
             // <RefreshListView/>
@@ -167,13 +174,9 @@ export default class HomeScreen extends React.Component {
                     ref='listView'
                     dataSource={this.state.dataSource}
                     renderHeader={() => this.renderHeaderView()}
-                    renderRow={(rowData) =>
-                        <GroupInfoItem
-                            info={rowData}
-                            onPress={(index) => this.onGroupSelected(index)}
-                        />
-                    }
+                    renderRow={(rowData, sectionId, rowId) => this._renderRow(rowData, sectionId, rowId)}
                     onHeaderRefresh={() => this.loadData()}
+                    onScroll={(e) => this._onScroll(e)}
                 />
             </View>
         )
