@@ -29,9 +29,9 @@ export default class GroupInfoItem extends React.Component {
         return (
             <TouchableOpacity style={styles.container} onPress={() => this.props.onPress()}>
                 <Image style={styles.icon} source={{uri: imageUrl}}/>
-                <View style={{paddingRight:-10,paddingLeft:20}}>
+                <View style={{paddingRight:10,paddingLeft:20,flex:1} } >
                     <Text style={styles.title}>{groupInfo.title}</Text>
-                    <Text style={styles.subtitle} numberOfLines={2}>{groupInfo.subtitle}{groupInfo.subtitle}{groupInfo.subtitle}</Text>
+                    <Text style={styles.subtitle} numberOfLines={0}>{groupInfo.subtitle} {groupInfo.subtitle} {groupInfo.subtitle}</Text>
                     <View>
                         <PriceText price={groupInfo.price} isShowRMB={true} style={styles.price}/>
                     </View>
@@ -51,8 +51,9 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1/Screen.scale
     },
     icon: {
-        width: 60,
-        height: 40,
+        width: 80,
+        height: 80,
+        borderRadius: 5,
     },
     title: {
         color: '#111111',
