@@ -11,10 +11,11 @@ import React from 'react';
 import {View, Image, StyleSheet, Text, InteractionManager, ListView} from 'react-native';
 
 import RefreshListView from '../View/RefreshListView'
+import GroupInfoItem from '../View/GroupInfoItem'
 import RefreshState from '../View/RefreshState'
 import Screen from '../../Tools/Screen'
 import SpaceView from '../../Tools/SpaceView'
-import APIManager from '../../Tools/APIManager'
+import {groupPurchaseHeaderUrl} from  '../../Tools/APIManager'
 // component
 export default class GroupPurchaseScreen extends React.Component {
     static navigationOptions = ({navigation}) => ({
@@ -36,38 +37,44 @@ export default class GroupPurchaseScreen extends React.Component {
 
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
-                if (this.refs.listView) {
-                    this.refs.listView.startHeaderRefresh();
+                if (this.refs.list) {
+                    this.refs.list.startHeaderRefresh();
                 }
             }
         )
     }
 
     renderHeader() {
+        let info = this.props.navigation.state.params.groupInfo
         return (
             <View>
+                <Image source={{uri:info.imageUrl.replace('w.h','480.0')}} style={{width:Screen.screenWidth,height:200}} resizeMode={'cover'}/>
                 <SpaceView/>
             </View>
 
         )
     }
 
-    _renderRow(rowData, sectionId, rowId) {
+    _renderRow(rowData, sectionID, rowID) {
         return (
-            <GroupInfoItem info={rowData}/>
+            <GroupInfoItem info={rowData} onPress={() => {
+                this.props.navigation.navigate('Group', {groupInfo: rowData});
+            }}/>
         )
     }
 
     loadData() {
-        fetch(APIManager.recommend)
+        let info = this.props.navigation.state.params.groupInfo
+        console.log(groupPurchaseHeaderUrl(info.id))
+        fetch(groupPurchaseHeaderUrl(info.id))
             .then((response) => response.json())
             .then((json) => {
                 console.log(JSON.stringify(json.data));
-                let dataList = json.data.map((info) => {
+                let dataList = json.data.deals.map((info) => {
                     return {
                         id: info.id,
-                        imageUrl: info.squareimgurl,
-                        title: info.mname,
+                        imageUrl: info.imgurl,
+                        title: info.title,
                         subtitle: `[${info.range}]${info.title}`,
                         price: info.price
                     }
@@ -76,11 +83,11 @@ export default class GroupPurchaseScreen extends React.Component {
                     dataSource: this.state.dataSource.cloneWithRows(dataList)
                 });
                 setTimeout(() => {
-                    this.refs.listView.endRefresh(RefreshState.NoMoreData)
+                    this.refs.list.endRefresh(RefreshState.NoMoreData)
                 }, 600)
             })
             .catch((error) => {
-                this.refs.listView.endRefresh(RefreshState.Failure)
+                this.refs.list.endRefresh(RefreshState.Failure)
                 alert(error);
             })
     }
@@ -88,11 +95,11 @@ export default class GroupPurchaseScreen extends React.Component {
     render() {
         return (
             <RefreshListView
-                ref='listView'
-                renderHeader={this.renderHeader}
+                ref='list'
+                renderHeader={() => this.renderHeader()}
                 dataSource={this.state.dataSource}
-                renderRow={(rowData, rowId, sectionId) => this._renderRow(rowData, rowId, sectionId)}
-                onHeaderRefresh={this.loadData}
+                renderRow={(rowData, sectionID, rowID) => this._renderRow(rowData, sectionID, rowID)}
+                onHeaderRefresh={() => this.loadData()}
             />
         )
     }
