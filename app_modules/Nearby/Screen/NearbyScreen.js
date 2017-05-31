@@ -12,6 +12,9 @@ import {
     Button,
 } from 'react-native'
 export default class NearbyScreen extends React.Component {
+    static navigationOptions = ((navigation) => ({
+        headerStyle:{backgroundColor:'2cc0ae'}
+    }))
     render() {
         return (
             <View>

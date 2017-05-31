@@ -14,7 +14,7 @@ import PageControl from './PageControl'
 
 import Screen from '../../Tools/Screen'
 
-export default class HomeMenuView extends React.Component {
+class HomeMenuView extends React.Component {
 
     state: {
         currentPage: number,
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
 })
 
 
-
+export default HomeMenuView;
 
 
 

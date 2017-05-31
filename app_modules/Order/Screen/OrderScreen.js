@@ -12,6 +12,14 @@ import {
     Button,
 } from 'react-native'
 export default class OrderScreen extends React.Component {
+    static navigationOptions = ((navigation) => ({
+        headerStyle:{backgroundColor:'2cc0ae'},
+        headerTitle:(
+            <View>
+
+            </View>
+        )
+    }))
     render() {
         return (
             <View>
