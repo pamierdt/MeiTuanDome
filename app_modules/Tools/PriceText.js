@@ -8,6 +8,7 @@
 
 
 import React from 'react';
+import ColorStyles  from './ColorStyles'
 import {View, Image, StyleSheet, Text} from 'react-native';
 
 // component
@@ -17,17 +18,24 @@ export default class PriceText extends React.Component {
         priceStyle: React.PropTypes.style,
         isShowRMB: React.PropTypes.bool,
         rmbStyle: React.PropTypes.style,
-        price: React.PropTypes.string
+        price: React.PropTypes.string,
+        afterPrice: React.PropTypes.string,
+        afterPriceStyle: React.PropTypes.style
     }
     static defaultProps = {
         priceStyle: {
-            color: '#3dbfae',
+            color: ColorStyles.RNRed,
             fontSize: 16,
         },
         rmbStyle: {
-            color: '#3dbfae',
+            color: ColorStyles.RNRed,
             fontSize: 12,
-            marginBottom: 1,
+            marginBottom: 0,
+        },
+        afterPriceStyle: {
+            color: ColorStyles.RNRed,
+            fontSize: 12,
+            marginBottom: 0,
         },
         isShowRMB: true,
 
@@ -40,6 +48,9 @@ export default class PriceText extends React.Component {
                     <Text style={this.props.rmbStyle}>{(this.props.isShowRMB ? '¥' : '')}</Text>
                 </View>
                 <Text style={this.props.priceStyle}>{this.props.price}</Text>
+                <View style={styles.rmbContainer}>
+                    <Text style={this.props.afterPriceStyle}>{this.props.afterPrice}</Text>
+                </View>
             </View>
         )
     }
@@ -51,9 +62,10 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
     },
     rmbContainer: {
-        margin: 0,
+        marginBottom: 0,
         justifyContent: 'flex-end',
         alignItems: 'center',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        alignSelf: 'flex-end'
     }
 })

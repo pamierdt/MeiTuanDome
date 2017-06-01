@@ -1,6 +1,6 @@
 /**
  * StarItem
- * meituandemo
+ * LarkByRN
  *
  * Created by peng on 2017/5/31 18:39.
  * @WebStorm
@@ -27,7 +27,7 @@ export default class StarItem extends React.Component {
 
     render() {
         return (
-            <TouchableOpacity style={styles.container}>
+            <TouchableOpacity style={styles.container} disabled = {!this.props.canTouchenable} >
                 <Image style={this.props.isBigStar ? styles.bigIcon : styles.littleIcon} source= { this.props.isSelected ? require('../../Image/Public/icon_star_big_red@2x.png'):require('../../Image/Public/icon_star_big_gray@2x.png')}/>
             </TouchableOpacity>
         )

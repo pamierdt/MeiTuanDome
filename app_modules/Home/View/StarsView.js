@@ -33,9 +33,20 @@ export default class StarsView extends React.Component {
         this.state = {
             score: this.props.score
         }
-        if (this.props.canTouchEnable) {
-
+        var stars = [];
+        for (var i = 0; i < MAX_STAR_COUNT; i++) {
+            var star = (
+                <StarItem isSelected={i  < Math.round(this.state.score)} isBigStar={this.props.isBigStar}
+                          canTouchenable={this.props.canTouchEnable} score={0}>
+                </StarItem>
+            )
+            stars.push(star);
         }
+        return (
+            <View style={styles.container}>
+                {stars}
+            </View>
+        )
     }
 }
 // styles
@@ -43,7 +54,7 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         justifyContent: 'center',
-        backgroundColor: ''
+        backgroundColor: 'white'
     }
 })
 

@@ -9,6 +9,7 @@
 
 import React from 'react';
 import {View, Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import StarsView from './StarsView'
 
 import Screen from '../../Tools/Screen'
 import PriceText from '../../Tools/PriceText'
@@ -32,8 +33,9 @@ export default class GroupInfoItem extends React.Component {
                 <View style={{paddingRight:10,paddingLeft:20,flex:1} } >
                     <Text style={styles.title}>{groupInfo.title}</Text>
                     <Text style={styles.subtitle} numberOfLines={0}>{groupInfo.subtitle}</Text>
-                    <View style={{marginTop: 10}}>
-                        <PriceText price={groupInfo.price} isShowRMB={true} style={styles.price}/>
+                    <View style={{marginTop: 10 ,flexDirection:'row'}}>
+                        <PriceText price={groupInfo.price} isShowRMB={true} style={styles.price} afterPrice={'起'}/>
+                        <StarsView score={groupInfo.rating} isBigStar={true}/>
                     </View>
                 </View>
             </TouchableOpacity>

@@ -50,7 +50,8 @@ export default class HomeScreen extends React.Component {
         ),
         headerRight: (
             <TouchableOpacity >
-                <Image source={require('../../Image/Home/icon_navigationItem_message_white@2x.png')} style={{justifyContent:'flex-start'}}>
+                <Image source={require('../../Image/Home/icon_navigationItem_message_white@2x.png')}
+                       style={{justifyContent: 'flex-start'}}>
                 </Image>
             </TouchableOpacity>
 
@@ -103,7 +104,8 @@ export default class HomeScreen extends React.Component {
                         imageUrl: info.squareimgurl,
                         title: info.mname,
                         subtitle: `[${info.range}]${info.title}`,
-                        price: info.price
+                        price: info.price,
+                        rating: info.rating
                     }
                 })
                 this.setState({
